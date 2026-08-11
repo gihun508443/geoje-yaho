@@ -1,0 +1,7 @@
+{
+  "name": "anwonjalbu-ranking",
+  "private": true,
+  "dependencies": {
+    "redis": "^4.7.0"
+  }
+}
