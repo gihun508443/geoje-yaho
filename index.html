@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>안원잘부 랭킹 놀이터 — 최애 회차 월드컵 & 티어표</title>
+<meta name="description" content="안녕하세요원이입니다잘부탁드립니다 본편 24편으로 즐기는 이상형 월드컵과 티어표. 팬이 만든 비공식 페이지입니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="안원잘부 랭킹 놀이터">
+<meta property="og:description" content="최애 회차를 월드컵으로 가리고, S부터 D까지 티어표를 짜보세요.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0c1430">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c1430;
+    --ink2:#161f45;
+    --line:rgba(255,243,224,.16);
+    --cream:#fff3e0;
+    --pink:#ff2f8e;
+    --tang:#ffb02e;
+    --sea:#39e0cf;
+    --dim:rgba(255,243,224,.62);
+    --display:'Black Han Sans', 'Noto Sans KR', sans-serif;
+    --body:'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--body);
+    color:var(--cream);
+    background:
+      radial-gradient(900px 500px at 15% -8%, rgba(255,47,142,.22), transparent 60%),
+      radial-gradient(700px 460px at 88% 4%, rgba(57,224,207,.16), transparent 62%),
+      var(--ink);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:26px 18px 80px}
+
+  /* ---------- header ---------- */
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.06em;
+    color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .eyebrow b{color:var(--tang);font-weight:700}
+  h1{font-family:var(--display);font-size:clamp(34px,8.4vw,68px);line-height:.95;margin:14px 0 6px;
+    letter-spacing:-.01em}
+  h1 .yaho{color:var(--pink);position:relative;display:inline-block}
+  h1 .yaho::after{content:"★";position:absolute;top:-.35em;right:-.5em;font-size:.32em;color:var(--tang)}
+  .sub{color:var(--dim);font-size:14px;line-height:1.7;max-width:46ch;margin:0}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;gap:8px;margin:26px 0 22px;border-bottom:1px solid var(--line);padding-bottom:0}
+  .tab{appearance:none;background:none;border:0;border-bottom:3px solid transparent;color:var(--dim);
+    font-family:var(--display);font-size:17px;padding:10px 4px;margin-right:16px;cursor:pointer;letter-spacing:.02em}
+  .tab[aria-selected="true"]{color:var(--cream);border-bottom-color:var(--pink)}
+  .tab:focus-visible{outline:2px solid var(--sea);outline-offset:3px}
+
+  .panel[hidden]{display:none}
+
+  /* ---------- buttons ---------- */
+  .btn{appearance:none;cursor:pointer;font-family:var(--body);font-weight:700;font-size:14px;
+    border-radius:999px;padding:11px 20px;border:1px solid var(--line);background:rgba(255,243,224,.06);color:var(--cream);
+    transition:transform .12s ease, background .12s ease}
+  .btn:hover{background:rgba(255,243,224,.13)}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:var(--pink);border-color:var(--pink);color:#fff}
+  .btn.primary:hover{background:#ff4d9e}
+  .btn.ghost{background:none}
+  .btn:focus-visible{outline:2px solid var(--sea);outline-offset:3px}
+  .btnrow{display:flex;flex-wrap:wrap;gap:10px}
+
+  /* ---------- worldcup setup ---------- */
+  .setup{border:1px solid var(--line);border-radius:20px;padding:22px;background:rgba(22,31,69,.55)}
+  .setup h2{font-family:var(--display);font-size:22px;margin:0 0 4px}
+  .setup p{color:var(--dim);font-size:13px;margin:0 0 18px}
+  .sizes{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+  .size{appearance:none;cursor:pointer;background:none;border:1px solid var(--line);color:var(--cream);
+    border-radius:14px;padding:14px 18px;text-align:left;min-width:118px;font-family:var(--body)}
+  .size b{display:block;font-family:var(--display);font-size:20px;letter-spacing:.02em}
+  .size span{font-size:11px;color:var(--dim)}
+  .size[aria-pressed="true"]{border-color:var(--tang);background:rgba(255,176,46,.12)}
+  .size:focus-visible{outline:2px solid var(--sea);outline-offset:3px}
+
+  /* ---------- match ---------- */
+  .roundbar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .roundname{font-family:var(--display);font-size:26px}
+  .roundcount{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+  .prog{height:4px;background:rgba(255,243,224,.12);border-radius:99px;overflow:hidden;margin-bottom:20px}
+  .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--tang),var(--pink));width:0;transition:width .3s ease}
+
+  .arena{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative}
+  .vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+    font-family:var(--display);font-size:20px;background:var(--ink);color:var(--tang);
+    border:2px solid var(--tang);border-radius:999px;width:52px;height:52px;display:grid;place-items:center;pointer-events:none}
+
+  .card{appearance:none;text-align:left;padding:0;cursor:pointer;background:rgba(22,31,69,.7);
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;color:var(--cream);
+    transition:transform .15s ease, border-color .15s ease}
+  .card:hover{border-color:var(--pink);transform:translateY(-3px)}
+  .card:focus-visible{outline:2px solid var(--sea);outline-offset:3px}
+  /* 썸네일: 못 불러오면 아래 포스터가 그대로 보임 */
+  .poster{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;display:grid;
+    align-content:center;gap:6px;padding:14px 16px;
+    background:linear-gradient(135deg,var(--c1),var(--c2))}
+  .poster::before{content:"★";position:absolute;right:-6px;bottom:-18px;font-size:86px;
+    color:rgba(255,255,255,.16);line-height:1;pointer-events:none}
+  .poster .ptag{font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.82);font-weight:700;position:relative}
+  .poster .ptitle{font-family:var(--display);font-size:clamp(13px,3vw,18px);line-height:1.2;
+    color:#fff;position:relative;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s ease}
+  .poster img.ok{opacity:1}
+  .poster.big{padding:20px 22px}
+  .poster.big .ptitle{font-size:clamp(20px,5vw,32px)}
+  .poster.big::before{font-size:150px;bottom:-34px}
+  .poster.mini{padding:7px 8px;gap:2px}
+  .poster.mini .ptag{display:none}
+  .poster.mini .ptitle{font-size:10px;line-height:1.25}
+  .poster.mini::before{font-size:40px;bottom:-8px;right:-2px}
+  .card .meta{padding:13px 14px 15px}
+  .card .date{font-size:11px;color:var(--tang);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+  .card .title{font-family:var(--display);font-size:clamp(15px,3.4vw,19px);line-height:1.25;margin:5px 0 7px}
+  .card .cast{font-size:11px;color:var(--dim)}
+  .card.won{border-color:var(--tang);animation:pop .3s ease}
+  @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.035)}100%{transform:scale(1)}}
+
+  .watch{display:inline-block;margin-top:10px;font-size:11px;color:var(--sea);text-decoration:none;
+    border:1px solid rgba(57,224,207,.4);border-radius:99px;padding:4px 10px}
+  .watch:hover{background:rgba(57,224,207,.14)}
+
+  .burst{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:50;opacity:0}
+  .burst span{font-family:var(--display);font-size:clamp(48px,14vw,110px);color:var(--tang);
+    text-shadow:0 0 30px rgba(255,176,46,.5);transform:rotate(-7deg)}
+  .burst.go{animation:yaho .62s ease-out}
+  @keyframes yaho{
+    0%{opacity:0;transform:scale(.6)}
+    30%{opacity:1;transform:scale(1.06)}
+    100%{opacity:0;transform:scale(1.3)}
+  }
+
+  /* ---------- result ---------- */
+  .champ{border:1px solid var(--tang);border-radius:22px;padding:20px;background:
+    linear-gradient(180deg, rgba(255,176,46,.14), rgba(22,31,69,.6))}
+  .champ .crown{font-family:var(--display);font-size:14px;color:var(--tang);letter-spacing:.14em}
+  .champ img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;margin:12px 0}
+  .champ h3{font-family:var(--display);font-size:clamp(22px,5.5vw,34px);margin:0 0 6px;line-height:1.15}
+  .runner{margin-top:16px;font-size:13px;color:var(--dim)}
+  .runner b{color:var(--cream);font-weight:700}
+  .hall{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+  .hall h4{font-family:var(--display);font-size:16px;margin:0 0 10px}
+  .hall ol{margin:0;padding-left:20px;font-size:13px;color:var(--dim);line-height:1.9}
+  .hall ol b{color:var(--cream)}
+
+  /* ---------- tier ---------- */
+  .tierhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .hint{font-size:12px;color:var(--dim);line-height:1.6}
+  .tier{display:grid;grid-template-columns:64px 1fr;border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;margin-bottom:8px;min-height:78px;transition:background .12s ease}
+  .tier.armed{background:rgba(255,47,142,.1)}
+  .tier .label{display:grid;place-items:center;font-family:var(--display);font-size:26px;color:#1a1200}
+  .tier .drop{display:flex;flex-wrap:wrap;gap:6px;padding:8px;align-content:flex-start;background:rgba(12,20,48,.5)}
+  .tier[data-t="S"] .label{background:var(--pink);color:#fff}
+  .tier[data-t="A"] .label{background:var(--tang)}
+  .tier[data-t="B"] .label{background:var(--sea)}
+  .tier[data-t="C"] .label{background:#8f9bd6}
+  .tier[data-t="D"] .label{background:#59648f;color:#0c1430}
+  .pool{border:1px dashed var(--line);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;
+    min-height:80px;margin-top:16px;align-content:flex-start}
+  .chip{appearance:none;cursor:pointer;border:1px solid var(--line);background:rgba(22,31,69,.85);
+    border-radius:10px;padding:0;overflow:hidden;width:120px;color:var(--cream);text-align:left;position:relative}
+  .chip.picked{border-color:var(--pink);box-shadow:0 0 0 2px rgba(255,47,142,.45)}
+  .chip:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+  .empty{font-size:11px;color:var(--dim);padding:8px}
+
+  .banner{border:1px solid var(--sea);background:rgba(57,224,207,.1);border-radius:16px;
+    padding:14px 16px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;
+    align-items:center;justify-content:space-between}
+  .banner[hidden]{display:none}
+  .banner .btxt{font-size:13px;line-height:1.5;min-width:0}
+  .banner .btxt b{color:var(--sea)}
+
+  .rank{position:absolute;top:5px;left:5px;z-index:2;font-style:normal;
+    font-family:var(--display);font-size:12px;line-height:1;padding:4px 6px;border-radius:7px;
+    background:var(--ink);color:var(--tang);border:1px solid var(--tang);font-variant-numeric:tabular-nums}
+
+  .selbar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:55;width:min(660px,calc(100% - 24px));
+    background:rgba(12,20,48,.96);border:1px solid var(--tang);border-radius:16px;padding:12px 14px;
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+    box-shadow:0 14px 40px rgba(0,0,0,.45)}
+  .selbar[hidden]{display:none}
+  .selinfo{min-width:0;line-height:1.4}
+  .selinfo b{display:block;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .selinfo span{font-size:11px;color:var(--tang)}
+  .selbtns{display:flex;flex-wrap:wrap;gap:6px}
+  .btn.small{padding:7px 12px;font-size:12px}
+  .btn[disabled]{opacity:.35;cursor:not-allowed}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--pink);color:#fff;
+    font-size:13px;font-weight:700;padding:10px 18px;border-radius:99px;opacity:0;transition:opacity .25s ease;z-index:60}
+  .toast.show{opacity:1}
+
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:14px;font-size:11px;color:var(--dim);line-height:1.8}
+
+  @media (max-width:560px){
+    .arena{gap:10px}
+    .vs{width:42px;height:42px;font-size:16px}
+    .card .meta{padding:10px}
+    .tier{grid-template-columns:48px 1fr}
+    .tier .label{font-size:20px}
+    .chip{width:calc(33.333% - 4px)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">안녕하세요원이입니다잘부탁드립니다 · 본편 <b>24편</b></div>
+    <h1>안원잘부<br>랭킹 <span class="yaho">놀이터</span></h1>
+    <p class="sub">1대1로 붙여서 최애 회차를 가리거나, S부터 D까지 티어표를 짜보세요. 결과는 이 브라우저에 저장돼요.</p>
+  </header>
+
+  <div class="banner" id="banner" hidden></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-wc" aria-selected="true" aria-controls="panel-wc">이상형 월드컵</button>
+    <button class="tab" role="tab" id="tab-tier" aria-selected="false" aria-controls="panel-tier">티어표</button>
+  </div>
+
+  <!-- ============ 월드컵 ============ -->
+  <section class="panel" id="panel-wc" role="tabpanel" aria-labelledby="tab-wc">
+    <div id="wc-setup" class="setup">
+      <h2>몇 편으로 붙일까요?</h2>
+      <p>고른 개수만큼 무작위로 뽑아서 대진표를 짭니다. 24편은 부전승이 섞여요.</p>
+      <div class="sizes" id="sizes"></div>
+      <div class="btnrow">
+        <button class="btn primary" id="start">대진표 짜기</button>
+        <button class="btn ghost" id="clear-hall">우승 기록 지우기</button>
+      </div>
+      <div class="hall" id="hall" hidden>
+        <h4>내 우승 기록</h4>
+        <ol id="hall-list"></ol>
+      </div>
+    </div>
+
+    <div id="wc-match" hidden>
+      <div class="roundbar">
+        <div class="roundname" id="round-name">16강</div>
+        <div class="roundcount" id="round-count">1 / 8</div>
+      </div>
+      <div class="prog"><i id="prog-bar"></i></div>
+      <div class="arena" id="arena"></div>
+      <div class="btnrow" style="margin-top:18px">
+        <button class="btn ghost" id="restart">처음부터</button>
+      </div>
+    </div>
+
+    <div id="wc-result" hidden></div>
+  </section>
+
+  <!-- ============ 티어표 ============ -->
+  <section class="panel" id="panel-tier" role="tabpanel" aria-labelledby="tab-tier" hidden>
+    <div class="tierhead">
+      <p class="hint">영상을 탭한 뒤 넣을 줄을 탭하세요. 왼쪽부터 1위이고, 아래 바에서 순위를 올리고 내릴 수 있어요.</p>
+      <div class="btnrow">
+        <button class="btn primary" id="share-tier">공유 링크 복사</button>
+        <button class="btn" id="copy-tier">결과 복사</button>
+        <button class="btn ghost" id="reset-tier">전부 비우기</button>
+      </div>
+    </div>
+    <div id="tiers"></div>
+    <h4 style="font-family:var(--display);font-size:15px;margin:22px 0 0">아직 안 넣은 영상</h4>
+    <div class="pool" id="pool"></div>
+  </section>
+
+  <footer>
+    팬이 만든 비공식 페이지입니다. 채널·영상의 모든 권리는
+    <a href="https://www.youtube.com/channel/UCWpY0eSJtyO-qNAPbKFRSSg" target="_blank" rel="noopener" style="color:var(--sea)">안녕하세요원이입니다잘부탁드립니다</a>
+    및 솔파스튜디오에 있습니다. 영상 목록은 2026년 8월 기준 본편이며, 티어표와 우승 기록은 이 브라우저에만 저장됩니다.
+  </footer>
+</div>
+
+<div class="selbar" id="selbar" hidden></div>
+<div class="burst" id="burst"><span>야호~!</span></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const VIDEOS = [
+  {id:"lSxqQYipZoU", t:"선민 삼촌과 콩나물 국밥", d:"02.06", c:"이선민"},
+  {id:"6sIeZF5_ixU", t:"곰을 만났을 때 대처법 (실전편)", d:"02.10", c:"이주헌 대표"},
+  {id:"fbgmOeTkKHw", t:"곰을 만났을 때 대처법 (상상편)", d:"02.10", c:"원이"},
+  {id:"1O4hJxumimA", t:"정일영 교수님과 달팽이 요리", d:"02.20", c:"정일영"},
+  {id:"ZLWqgD03tFU", t:"인간에게 가장 위험한 동물 TOP 5", d:"02.27", c:"원이"},
+  {id:"bvUS-ri9nqQ", t:"갸루 출신 일본인에게 일본어 배우기", d:"03.06", c:"미나미"},
+  {id:"heifaIjlSUc", t:"갸루의 자세에 대해서 배워보았습니다", d:"03.20", c:"미나미 · 거제 야호 탄생"},
+  {id:"inaTPJiZ734", t:"인생 첫 파인다이닝에 간 셋", d:"03.29", c:"이선민 · 유영우"},
+  {id:"FcMaC8akSU8", t:"미나미의 갸루라이브 메들리!", d:"04.09", c:"미나미"},
+  {id:"giWNmOtwsR4", t:"유영우 삼촌과 눈물 참기 대결", d:"04.17", c:"유영우"},
+  {id:"NS7tSrMrWsc", t:"하루종일 사투리만 써봤습니다", d:"05.01", c:"제나 · 미나미"},
+  {id:"_AqXSSQ0Cmo", t:"미나미에게 위협을 느끼나요? | 10만 Q&A", d:"05.08", c:"미나미 · 제나"},
+  {id:"TpajmJJlHSE", t:"선배지만 친구가 하고 싶어", d:"05.15", c:"설윤"},
+  {id:"OrCOflk2QmQ", t:"갸루와 거제에 왔습니다 (거제 1편)", d:"05.22", c:"미나미 · 채널 첫 1000만"},
+  {id:"JJBf0jCcfrQ", t:"떡상 전 성수나들이 (사투리 2편)", d:"05.29", c:"제나"},
+  {id:"SF29doLuBfc", t:"갸루와 거제 2편", d:"06.05", c:"미나미"},
+  {id:"5JZ5biQ_hMI", t:"저희도 리센느입니다...", d:"06.12", c:"리센느 전원"},
+  {id:"XD3rCGvMPJE", t:"진짜 '야호'하는지 물어봤습니다", d:"06.19", c:"미나미 · 시부야"},
+  {id:"xYLNDE4RXsg", t:"갑자기 떡상해서 찍는 댓글읽기", d:"06.26", c:"리브 · 메이"},
+  {id:"wdH5_I7UiHA", t:"미나미의 본모습", d:"06.28", c:"미나미"},
+  {id:"Yy58f1A6F-c", t:"미나미의 뿌리를 찾아서 | 최종화", d:"07.03", c:"미나미 · 치바"},
+  {id:"5spDxl-yzUQ", t:"양키의 하루 배워보기 | 캐릭터 외전", d:"07.10", c:"미나미"},
+  {id:"8r-YPb_tKlM", t:"안원잘부 미방분", d:"07.17", c:"시즌 1 마지막"},
+  {id:"4m9eLr-NofA", t:"경주에서 올라온 아이돌", d:"08.07", c:"제나 · 시즌 2"}
+];
+
+const thumb = (id, big) => `https://i.ytimg.com/vi/${id}/${big ? "maxresdefault" : "mqdefault"}.jpg`;
+const link  = id => `https://www.youtube.com/watch?v=${id}`;
+
+// 출연진에 따라 포스터 색을 다르게 (썸네일이 안 뜰 때 보이는 화면)
+function theme(v){
+  const c = v.c;
+  if(c.includes("미나미")) return {c1:"#ff2f8e", c2:"#7a1352", tag:"갸루"};
+  if(c.includes("제나"))   return {c1:"#39e0cf", c2:"#0d5f6b", tag:"신라공주"};
+  if(c.includes("리브") || c.includes("메이")) return {c1:"#8f7bff", c2:"#2a1f6b", tag:"리트와 메트"};
+  if(c.includes("전원"))   return {c1:"#ffb02e", c2:"#8a4a06", tag:"리센느 전원"};
+  if(c.includes("원이") || c.includes("시즌")) return {c1:"#4a63c9", c2:"#141b45", tag:"원이"};
+  return {c1:"#ff8a4c", c2:"#6b2410", tag:"게스트"};
+}
+
+function poster(v, size){
+  const th = theme(v);
+  const cls = size === "big" ? "poster big" : size === "mini" ? "poster mini" : "poster";
+  return `<div class="${cls}" style="--c1:${th.c1};--c2:${th.c2}">
+    <span class="ptag">2026. ${v.d} · ${th.tag}</span>
+    <span class="ptitle">${v.t}</span>
+    <img src="${thumb(v.id, size==='mini' ? false : true)}" alt="" loading="lazy"
+         onload="this.classList.add('ok')"
+         onerror="this.onerror=null;this.src='${thumb(v.id,false)}'">
+  </div>`;
+}
+const $ = s => document.querySelector(s);
+
+/* ---------- 저장 (브라우저에 보관) ---------- */
+async function load(key, fallback){
+  try{ const raw = localStorage.getItem("awjb:" + key); return raw ? JSON.parse(raw) : fallback; }
+  catch(e){ return fallback; }
+}
+async function save(key, value){
+  try{ localStorage.setItem("awjb:" + key, JSON.stringify(value)); }catch(e){}
+}
+let toastTimer;
+function toast(msg){
+  const el = $("#toast"); el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove("show"), 1800);
+}
+
+/* ---------- 링크로 공유하기 ----------
+   티어표는 ?s=  , 월드컵 우승작은 ?w= 에 담습니다.
+   영상 번호를 36진수 한 글자로 바꾸고, 티어끼리는 - 로 구분해요. (예: ?s=n7a-25-3--1) */
+let viewingShared = false;
+
+function encodeTiers(state){
+  return TIERS.map(t =>
+    state[t].map(id => VIDEOS.findIndex(v=>v.id===id))
+            .filter(i => i > -1)
+            .map(i => i.toString(36)).join("")
+  ).join("-");
+}
+function decodeTiers(str){
+  if(!str) return null;
+  const parts = String(str).split("-");
+  if(parts.length !== TIERS.length) return null;
+  const out = {}; const seen = new Set(); let count = 0;
+  for(let k=0;k<TIERS.length;k++){
+    out[TIERS[k]] = [];
+    for(const ch of parts[k]){
+      const i = parseInt(ch, 36);
+      if(isNaN(i) || i < 0 || i >= VIDEOS.length || seen.has(i)) continue;
+      seen.add(i); out[TIERS[k]].push(VIDEOS[i].id); count++;
+    }
+  }
+  return count ? out : null;
+}
+function shareUrl(key, value){
+  const u = new URL(location.href);
+  u.search = ""; u.hash = "";
+  u.searchParams.set(key, value);
+  return u.toString();
+}
+function goHome(){ location.href = location.origin + location.pathname; }
+
+function showBanner(html, actions){
+  const b = $("#banner");
+  b.hidden = false;
+  b.innerHTML = `<div class="btxt">${html}</div><div class="btnrow">${
+    actions.map(a=>`<button class="btn small ${a.kind||""}" data-act="${a.id}">${a.label}</button>`).join("")
+  }</div>`;
+  b.querySelectorAll("button").forEach(btn=>{
+    btn.addEventListener("click", ()=>actions.find(a=>a.id===btn.dataset.act).run());
+  });
+}
+
+/* ---------- 탭 ---------- */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", String(t===tab)));
+    $("#panel-wc").hidden  = tab.id !== "tab-wc";
+    $("#panel-tier").hidden = tab.id !== "tab-tier";
+  });
+});
+
+/* ================= 월드컵 ================= */
+const SIZES = [
+  {n:8,  label:"8강",  note:"약 3분"},
+  {n:16, label:"16강", note:"약 6분"},
+  {n:24, label:"전체 24편", note:"부전승 포함"}
+];
+let chosenSize = 16;
+const sizesEl = $("#sizes");
+SIZES.forEach(s=>{
+  const b = document.createElement("button");
+  b.className = "size"; b.type = "button";
+  b.setAttribute("aria-pressed", String(s.n === chosenSize));
+  b.innerHTML = `<b>${s.label}</b><span>${s.note}</span>`;
+  b.addEventListener("click", ()=>{
+    chosenSize = s.n;
+    sizesEl.querySelectorAll(".size").forEach((x,i)=>x.setAttribute("aria-pressed", String(SIZES[i].n===chosenSize)));
+  });
+  sizesEl.appendChild(b);
+});
+
+let queue = [], nextRound = [], current = null, matchIdx = 0, totalInRound = 0, runnerUp = null;
+
+const shuffle = a => a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(p=>p[1]);
+function roundName(n){
+  if(n<=2) return "결승";
+  if(n<=4) return "4강";
+  if(n<=8) return "8강";
+  if(n<=16) return "16강";
+  return n + "강";
+}
+
+$("#start").addEventListener("click", startGame);
+$("#restart").addEventListener("click", ()=>{ show("setup"); });
+
+function show(view){
+  $("#wc-setup").hidden  = view !== "setup";
+  $("#wc-match").hidden  = view !== "match";
+  $("#wc-result").hidden = view !== "result";
+}
+
+function startGame(){
+  const pool = shuffle(VIDEOS.slice()).slice(0, chosenSize);
+  let size = 1; while(size < pool.length) size *= 2;
+  while(pool.length < size) pool.push(null);          // 부전승 자리
+  queue = shuffle(pool);
+  nextRound = []; matchIdx = 0; runnerUp = null;
+  totalInRound = queue.length / 2;
+  show("match");
+  nextMatch();
+}
+
+function nextMatch(){
+  if(queue.length === 0){
+    if(nextRound.length === 1){ finish(nextRound[0]); return; }
+    queue = nextRound; nextRound = []; matchIdx = 0; totalInRound = queue.length / 2;
+  }
+  const a = queue.shift(), b = queue.shift();
+  if(a === null || b === null){                        // 부전승은 자동 통과
+    nextRound.push(a || b); totalInRound--; nextMatch(); return;
+  }
+  current = [a,b];
+  matchIdx++;
+  $("#round-name").textContent = roundName(totalInRound*2 + nextRound.length*2);
+  $("#round-count").textContent = `${matchIdx} / ${totalInRound}`;
+  $("#prog-bar").style.width = ((matchIdx-1)/totalInRound*100) + "%";
+  renderArena();
+}
+
+function renderArena(){
+  const arena = $("#arena");
+  arena.innerHTML = "";
+  current.forEach(v=>{
+    const el = document.createElement("button");
+    el.className = "card"; el.type = "button";
+    el.innerHTML = `
+      ${poster(v)}
+      <div class="meta">
+        <div class="date">2026. ${v.d}</div>
+        <div class="title">${v.t}</div>
+        <div class="cast">${v.c}</div>
+        <a class="watch" href="${link(v.id)}" target="_blank" rel="noopener">유튜브에서 보기</a>
+      </div>`;
+    el.querySelector(".watch").addEventListener("click", e=>e.stopPropagation());
+    el.addEventListener("click", ()=>pick(v, el));
+    arena.appendChild(el);
+  });
+  const vs = document.createElement("div"); vs.className = "vs"; vs.textContent = "VS";
+  arena.appendChild(vs);
+}
+
+function pick(winner, el){
+  el.classList.add("won");
+  const other = current.find(v=>v!==winner);
+  if(queue.length === 0 && nextRound.length === 0) runnerUp = other;   // 결승전 패자
+  nextRound.push(winner);
+  const burst = $("#burst");
+  burst.classList.remove("go"); void burst.offsetWidth; burst.classList.add("go");
+  setTimeout(nextMatch, 330);
+}
+
+async function finish(champ){
+  show("result");
+  const hist = await load("wc:hall", []);
+  hist.unshift({id:champ.id, t:champ.t, size:chosenSize, at:new Date().toISOString().slice(0,10)});
+  await save("wc:hall", hist.slice(0,10));
+
+  $("#wc-result").innerHTML = `
+    <div class="champ">
+      <div class="crown">★ 내 최애 회차 ★</div>
+      <div style="border-radius:14px;overflow:hidden;margin:12px 0">${poster(champ,"big")}</div>
+      <h3>${champ.t}</h3>
+      <div class="cast" style="font-size:12px;color:var(--dim)">2026. ${champ.d} · ${champ.c}</div>
+      <a class="watch" href="${link(champ.id)}" target="_blank" rel="noopener">유튜브에서 보기</a>
+      ${runnerUp ? `<div class="runner">준우승 · <b>${runnerUp.t}</b></div>` : ""}
+    </div>
+    <div class="btnrow" style="margin-top:16px">
+      <button class="btn primary" id="share-champ">공유 링크 복사</button>
+      <button class="btn" id="again">한 번 더</button>
+      <button class="btn" id="to-s">이 영상 S티어 1위로</button>
+      <button class="btn ghost" id="copy-champ">결과 복사</button>
+    </div>`;
+
+  $("#share-champ").addEventListener("click", ()=>{
+    copy(shareUrl("w", VIDEOS.findIndex(v=>v.id===champ.id).toString(36)));
+  });
+  $("#again").addEventListener("click", ()=>show("setup"));
+  $("#copy-champ").addEventListener("click", ()=>{
+    copy(`내 안원잘부 최애 회차 1위: ${champ.t} (2026.${champ.d})`);
+  });
+  $("#to-s").addEventListener("click", async ()=>{
+    await place(champ.id, "S", 0);                 // 우승작이니 S티어 1위로
+    renderTiers();
+    toast("S티어 1위에 넣었어요");
+  });
+  renderHall();
+}
+
+async function renderHall(){
+  const hist = await load("wc:hall", []);
+  $("#hall").hidden = hist.length === 0;
+  $("#hall-list").innerHTML = hist.map(h=>`<li><b>${h.t}</b> — ${h.size}강 · ${h.at}</li>`).join("");
+}
+$("#clear-hall").addEventListener("click", async ()=>{
+  await save("wc:hall", []); renderHall(); toast("기록을 지웠어요");
+});
+
+/* ================= 티어표 ================= */
+/* tierState = { S:[id,id,...], A:[...] } — 배열 순서가 곧 티어 안에서의 순위 */
+const TIERS = ["S","A","B","C","D"];
+let tierState = {S:[],A:[],B:[],C:[],D:[]};
+let pickedId = null;
+
+const byId = id => VIDEOS.find(v=>v.id===id);
+const tierOf = id => TIERS.find(t=>tierState[t].includes(id)) || null;
+const rankOf = id => { const t = tierOf(id); return t ? tierState[t].indexOf(id)+1 : 0; };
+
+function detach(id){ TIERS.forEach(t=>{ const i = tierState[t].indexOf(id); if(i>-1) tierState[t].splice(i,1); }); }
+async function place(id, tier, index){
+  detach(id);
+  const arr = tierState[tier];
+  arr.splice(index === undefined || index < 0 ? arr.length : Math.min(index, arr.length), 0, id);
+  await persist();
+}
+async function persist(){ if(viewingShared) return; await save("tier:v2", tierState); }
+
+function dropIndex(container, x, y){
+  const chips = [...container.querySelectorAll(".chip")];
+  for(let i=0;i<chips.length;i++){
+    const r = chips[i].getBoundingClientRect();
+    if(y < r.bottom - r.height/2 && x < r.left + r.width/2) return i;
+    if(y < r.top + r.height/2) return i;
+  }
+  return chips.length;
+}
+
+function renderTiers(){
+  const box = $("#tiers"); box.innerHTML = "";
+  TIERS.forEach(t=>{
+    const row = document.createElement("div");
+    row.className = "tier"; row.dataset.t = t;
+    row.innerHTML = `<div class="label">${t}</div><div class="drop" data-tier="${t}"></div>`;
+    const drop = row.querySelector(".drop");
+    const items = tierState[t].map(byId).filter(Boolean);
+    if(items.length === 0) drop.innerHTML = `<div class="empty">비어 있음</div>`;
+    items.forEach((v,i)=>drop.appendChild(chip(v, i+1)));
+
+    drop.addEventListener("dragover", e=>{e.preventDefault(); row.classList.add("armed")});
+    drop.addEventListener("dragleave", ()=>row.classList.remove("armed"));
+    drop.addEventListener("drop", async e=>{
+      e.preventDefault(); row.classList.remove("armed");
+      const id = e.dataTransfer.getData("text/plain");
+      if(!id) return;
+      let idx = dropIndex(drop, e.clientX, e.clientY);
+      const from = tierState[t].indexOf(id);
+      if(from > -1 && from < idx) idx--;               // 같은 줄 안에서 옮길 때 보정
+      await place(id, t, idx);
+      renderTiers();
+    });
+    row.addEventListener("click", async ()=>{
+      if(!pickedId) return;
+      const id = pickedId; pickedId = null;
+      await place(id, t);
+      renderTiers();
+    });
+    box.appendChild(row);
+  });
+
+  const pool = $("#pool"); pool.innerHTML = "";
+  const rest = VIDEOS.filter(v=>!tierOf(v.id));
+  if(rest.length === 0) pool.innerHTML = `<div class="empty">전부 배치했어요. 잘하셨습니다!</div>`;
+  rest.forEach(v=>pool.appendChild(chip(v)));
+  pool.ondragover = e=>e.preventDefault();
+  pool.ondrop = async e=>{
+    e.preventDefault();
+    const id = e.dataTransfer.getData("text/plain");
+    if(id){ detach(id); await persist(); renderTiers(); }
+  };
+  renderSelbar();
+}
+
+function chip(v, rank){
+  const el = document.createElement("button");
+  el.className = "chip" + (pickedId===v.id ? " picked" : "");
+  el.type = "button"; el.draggable = true; el.title = v.t;
+  el.innerHTML = (rank ? `<em class="rank">${rank}</em>` : "") + poster(v, "mini");
+  el.addEventListener("dragstart", e=>e.dataTransfer.setData("text/plain", v.id));
+  el.addEventListener("click", e=>{
+    e.stopPropagation();
+    pickedId = (pickedId === v.id) ? null : v.id;
+    renderTiers();
+  });
+  return el;
+}
+
+/* 선택한 영상의 순위 조정 바 */
+function renderSelbar(){
+  const bar = $("#selbar");
+  if(!pickedId){ bar.hidden = true; return; }
+  const v = byId(pickedId), t = tierOf(pickedId), r = rankOf(pickedId);
+  bar.hidden = false;
+  bar.innerHTML = `
+    <div class="selinfo">
+      <b>${v.t}</b>
+      <span>${t ? `${t}티어 ${r}위` : "줄을 탭해서 넣으세요"}</span>
+    </div>
+    <div class="selbtns">
+      <button class="btn small" id="up" ${!t||r===1?"disabled":""}>↑ 순위 올리기</button>
+      <button class="btn small" id="down" ${!t||r===tierState[t].length?"disabled":""}>↓ 순위 내리기</button>
+      <button class="btn small ghost" id="out" ${!t?"disabled":""}>빼기</button>
+      <button class="btn small ghost" id="cancel">취소</button>
+    </div>`;
+  const move = async step=>{
+    const arr = tierState[t], i = arr.indexOf(pickedId);
+    arr.splice(i,1); arr.splice(i+step,0,pickedId);
+    await persist(); renderTiers();
+  };
+  if(t){
+    $("#up").addEventListener("click", e=>{e.stopPropagation(); if(r>1) move(-1)});
+    $("#down").addEventListener("click", e=>{e.stopPropagation(); if(r<tierState[t].length) move(1)});
+    $("#out").addEventListener("click", async e=>{e.stopPropagation(); detach(pickedId); pickedId=null; await persist(); renderTiers()});
+  }
+  $("#cancel").addEventListener("click", e=>{e.stopPropagation(); pickedId=null; renderTiers()});
+}
+
+$("#reset-tier").addEventListener("click", async ()=>{
+  tierState = {S:[],A:[],B:[],C:[],D:[]}; pickedId = null;
+  await persist(); renderTiers(); toast("티어표를 비웠어요");
+});
+$("#share-tier").addEventListener("click", ()=>{
+  const code = encodeTiers(tierState);
+  if(code.replace(/-/g,"") === ""){ toast("먼저 영상을 배치해 주세요"); return; }
+  copy(shareUrl("s", code));
+});
+$("#copy-tier").addEventListener("click", ()=>{
+  let out = "안원잘부 티어표";
+  TIERS.forEach(t=>{
+    const items = tierState[t].map(byId).filter(Boolean);
+    out += `\n\n[${t}]\n` + (items.length ? items.map((v,i)=>`${i+1}. ${v.t}`).join("\n") : "-");
+  });
+  copy(out);
+});
+
+function copy(text){
+  navigator.clipboard.writeText(text).then(()=>toast("복사했어요")).catch(()=>toast("복사에 실패했어요"));
+}
+
+/* ---------- 시작 ---------- */
+function openTab(which){
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", String(t.id === "tab-"+which)));
+  $("#panel-wc").hidden   = which !== "wc";
+  $("#panel-tier").hidden = which !== "tier";
+}
+
+(async function init(){
+  tierState = await load("tier:v2", null);
+  if(!tierState){                                   // 예전에 저장한 티어표가 있으면 옮겨오기
+    tierState = {S:[],A:[],B:[],C:[],D:[]};
+    const old = await load("tier:state", {});
+    VIDEOS.forEach(v=>{ if(old[v.id] && tierState[old[v.id]]) tierState[old[v.id]].push(v.id); });
+    await persist();
+  }
+  TIERS.forEach(t=>{ if(!Array.isArray(tierState[t])) tierState[t] = []; });
+
+  const params = new URLSearchParams(location.search);
+  const shared = decodeTiers(params.get("s"));
+  const wIdx = params.get("w") ? parseInt(params.get("w"), 36) : NaN;
+
+  if(shared){
+    const mine = tierState;
+    tierState = shared;
+    viewingShared = true;
+    showBanner("<b>친구가 공유한 티어표</b>를 보고 있어요. 여기서 순서를 바꿔도 내 티어표는 그대로예요.", [
+      {id:"keep", label:"내 티어표로 가져오기", kind:"", run: async ()=>{
+        viewingShared = false; await persist(); $("#banner").hidden = true;
+        history.replaceState(null,"",location.pathname); toast("내 티어표로 저장했어요");
+      }},
+      {id:"mine", label:"내 티어표 보기", kind:"ghost", run: ()=>{
+        tierState = mine; viewingShared = false; $("#banner").hidden = true;
+        history.replaceState(null,"",location.pathname); renderTiers();
+      }}
+    ]);
+    openTab("tier");
+  } else if(!isNaN(wIdx) && VIDEOS[wIdx]){
+    const v = VIDEOS[wIdx];
+    showBanner(`친구가 뽑은 최애 회차는 <b>${v.t}</b> 예요. 직접 돌려보면 어떤 게 나올까요?`, [
+      {id:"play", label:"나도 월드컵 돌리기", run: ()=>{ history.replaceState(null,"",location.pathname); $("#banner").hidden = true; }},
+      {id:"watch", label:"영상 보러가기", kind:"ghost", run: ()=>window.open(link(v.id), "_blank", "noopener")}
+    ]);
+  }
+
+  renderTiers();
+  renderHall();
+  show("setup");
+})();
+</script>
+</body>
+</html>
