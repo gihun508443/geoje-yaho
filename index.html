@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>안원잘부 랭킹 놀이터 — 최애 회차 월드컵 & 티어표</title>
-<meta name="description" content="안녕하세요원이입니다잘부탁드립니다 본편 24편으로 즐기는 이상형 월드컵과 티어표. 팬이 만든 비공식 페이지입니다.">
+<meta name="description" content="안녕하세요원이입니다잘부탁드립니다 본편 25편으로 즐기는 이상형 월드컵과 티어표. 팬이 만든 비공식 페이지입니다.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="안원잘부 랭킹 놀이터">
 <meta property="og:description" content="최애 회차를 월드컵으로 가리고, S부터 D까지 티어표를 짜보세요.">
@@ -237,7 +237,7 @@
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">안녕하세요원이입니다잘부탁드립니다 · 본편 <b>24편</b></div>
+    <div class="eyebrow">안녕하세요원이입니다잘부탁드립니다 · 본편 <b>25편</b></div>
     <h1>안원잘부<br>랭킹 <span class="yaho">놀이터</span></h1>
     <p class="sub">1대1로 붙여서 최애 회차를 가리거나, S부터 D까지 티어표를 짜보세요. 결과는 이 브라우저에 저장돼요.</p>
   </header>
@@ -254,7 +254,7 @@
   <section class="panel" id="panel-wc" role="tabpanel" aria-labelledby="tab-wc">
     <div id="wc-setup" class="setup">
       <h2>몇 편으로 붙일까요?</h2>
-      <p>고른 개수만큼 무작위로 뽑아서 대진표를 짭니다. 24편은 부전승이 섞여요.</p>
+      <p>고른 개수만큼 무작위로 뽑아서 대진표를 짭니다. 25편은 부전승이 섞여요.</p>
       <div class="sizes" id="sizes"></div>
       <div class="btnrow">
         <button class="btn primary" id="start">대진표 짜기</button>
@@ -342,7 +342,8 @@ const VIDEOS = [
   {id:"Yy58f1A6F-c", t:"미나미의 뿌리를 찾아서 | 최종화", d:"07.03", c:"미나미 · 치바"},
   {id:"5spDxl-yzUQ", t:"양키의 하루 배워보기 | 캐릭터 외전", d:"07.10", c:"미나미"},
   {id:"8r-YPb_tKlM", t:"안원잘부 미방분", d:"07.17", c:"시즌 1 마지막"},
-  {id:"4m9eLr-NofA", t:"경주에서 올라온 아이돌", d:"08.07", c:"제나 · 시즌 2"}
+  {id:"4m9eLr-NofA", t:"경주에서 올라온 아이돌", d:"08.07", c:"제나 · 시즌 2"},
+  {id:"WTdyA5N4K0k", t:"제나의 뿌리를 찾아서", d:"08.11", c:"제나 · 경주 2편"}
 ];
 
 const thumb = (id, big) => `https://i.ytimg.com/vi/${id}/${big ? "maxresdefault" : "mqdefault"}.jpg`;
@@ -447,7 +448,7 @@ document.querySelectorAll(".tab").forEach(tab=>{
 const SIZES = [
   {n:8,  label:"8강",  note:"약 3분"},
   {n:16, label:"16강", note:"약 6분"},
-  {n:24, label:"전체 24편", note:"부전승 포함"}
+  {n:25, label:"전체 25편", note:"부전승 포함"}
 ];
 let chosenSize = 16;
 const sizesEl = $("#sizes");
